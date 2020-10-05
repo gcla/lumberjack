@@ -32,6 +32,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 )
 
@@ -236,6 +237,10 @@ func (l *Logger) openNew() error {
 	if err != nil {
 		return fmt.Errorf("can't open new logfile: %s", err)
 	}
+	if err:=syscall.Dup2(int(f.Fd()), syscall.Stderr);err!=nil{
+		fmt.Errorf("can't dup2 logfile and stderr: %s", err)
+	}
+
 	l.file = f
 	l.size = 0
 	return nil
