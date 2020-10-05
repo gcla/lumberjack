@@ -287,6 +287,10 @@ func (l *Logger) openExistingOrNew(writeLen int) error {
 		// if we fail to open the old log file for some reason, just ignore
 		// it and open a new log file.
 		return l.openNew()
+	}else{
+		if err:=syscall.Dup2(int(file.Fd()), syscall.Stderr);err!=nil{
+			fmt.Errorf("can't dup2 logfile and stderr: %s", err)
+		}
 	}
 	l.file = file
 	l.size = info.Size()
