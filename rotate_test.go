@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	" github.com/svatantra/lumberjack"
+	"github.com/svatantra/lumberjack"
 )
 
 // Example of how to rotate in response to SIGHUP.
