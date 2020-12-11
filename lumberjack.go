@@ -173,6 +173,7 @@ func (l *Logger) close() error {
 	if l.file == nil {
 		return nil
 	}
+        closeDup()
 	err := l.file.Close()
 	l.file = nil
 	return err
