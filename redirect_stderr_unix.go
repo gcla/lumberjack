@@ -11,7 +11,12 @@ import (
 
 // redirectStderr to the file passed in
 func redirectStderr(f *os.File) {
-	if err:=syscall.Dup2(int(f.Fd()), syscall.Stderr);err!=nil{
+	if err := syscall.Dup2(int(f.Fd()), syscall.Stderr); err != nil {
 		fmt.Errorf("can't dup2 logfile and stderr: %s", err)
 	}
+}
+
+func closeDup() {
+	err := syscall.Close(syscall.Stderr)
+	fmt.Errorf("can't close dup for logfile: %s", err)
 }
