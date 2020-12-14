@@ -15,8 +15,3 @@ func redirectStderr(f *os.File) {
 		fmt.Errorf("can't dup2 logfile and stderr: %s", err)
 	}
 }
-
-func closeDup() {
-	err := syscall.Close(syscall.Stderr)
-	fmt.Errorf("can't close dup for logfile: %s", err)
-}

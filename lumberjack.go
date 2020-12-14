@@ -32,6 +32,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	"syscall"
 	"time"
 )
 
@@ -173,7 +174,7 @@ func (l *Logger) close() error {
 	if l.file == nil {
 		return nil
 	}
-        closeDup()
+	closeDup()
 	err := l.file.Close()
 	l.file = nil
 	return err
@@ -285,7 +286,7 @@ func (l *Logger) openExistingOrNew(writeLen int) error {
 		// if we fail to open the old log file for some reason, just ignore
 		// it and open a new log file.
 		return l.openNew()
-	}else{
+	} else {
 		redirectStderr(file)
 	}
 	l.file = file
@@ -543,4 +544,9 @@ func (b byFormatTime) Swap(i, j int) {
 
 func (b byFormatTime) Len() int {
 	return len(b)
+}
+
+func closeDup() {
+	err := syscall.Close(syscall.Stderr)
+	fmt.Errorf("can't close dup for logfile: %s", err)
 }
